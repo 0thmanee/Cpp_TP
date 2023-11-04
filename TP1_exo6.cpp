@@ -5,15 +5,15 @@
 using namespace std;
 
 class Marque {
+private:
     int code;
     string nom;
 
 public:
-    Marque(int code, const string nom)
-	{
-		this->code = code;
-		this->nom = nom;
-	}
+    Marque(int code, const string nom) {
+        this->code = code;
+        this->nom = nom;
+    }
 
     int getCode() { return code; }
     string getNom() { return nom; }
@@ -28,21 +28,21 @@ public:
 };
 
 class Article {
+private:
     static int reference_auto_increment;
     int reference;
     float prixHT;
     string marque;
     float tva;
 
-	public:
-    Article(float prixHT, string marque, float tva = 20)
-	{
-		this->reference_auto_increment++;
-		this->reference = reference_auto_increment;
-		this->prixHT = prixHT;
-		this->marque = marque;
-		this->tva = tva;
-	}
+public:
+    Article(float prixHT, string marque, float tva = 20) {
+        this->reference_auto_increment++;
+        this->reference = reference_auto_increment;
+        this->prixHT = prixHT;
+        this->marque = marque;
+        this->tva = tva;
+    }
 
     int getReference() { return reference; }
     float getPrixHT() { return prixHT; }
@@ -85,17 +85,18 @@ class Article {
 int Article::reference_auto_increment = 0;
 
 class Marche {
+private:
     string nomMagasin;
     string adresse;
     int numeroRue;
     vector<Article> stock;
 
-	public:
+public:
     Marche(string nomMagasin, string adresse, int numeroRue) {
-		this->nomMagasin = nomMagasin;
-		this->adresse = adresse;
-		this->numeroRue = numeroRue;
-	}
+        this->nomMagasin = nomMagasin;
+        this->adresse = adresse;
+        this->numeroRue = numeroRue;
+    }
 
     string getNomMagasin() { return nomMagasin; }
     string getAdresse() { return adresse; }
@@ -103,7 +104,7 @@ class Marche {
     vector<Article> getStock() { return stock; }
 
     void setNomMagasin(const string &nom) { nomMagasin = nom; }
-    void setAdresse(const string &adr) { adresse = adr; }
+    void setAdresse(const string adr) { adresse = adr; }
     void setNumeroRue(int rue) { numeroRue = rue; }
     void setStock(const vector<Article> &s) { stock = s; }
 
@@ -144,7 +145,8 @@ class Marche {
         }
 
         float sum = 0.0;
-        for (const Article &a : stock) {
+        for (vector<Article>::iterator it = stock.begin(); it != stock.end(); ++it) {
+            Article a = *it;
             sum += a.getPrixHT();
         }
         return sum / stock.size();
@@ -155,7 +157,8 @@ class Marche {
     }
 
     bool findArticleByRef(int ref) {
-        for (const Article &a : stock) {
+        for (vector<Article>::iterator it = stock.begin(); it != stock.end(); ++it) {
+            Article a = *it;
             if (a.getReference() == ref) {
                 return true;
             }
@@ -173,7 +176,8 @@ class Marche {
 
     int nbrArticleAvecMemeMarque(const string &marque) {
         int count = 0;
-        for (const Article &a : stock) {
+        for (vector<Article>::iterator it = stock.begin(); it != stock.end(); ++it) {
+            Article a = *it;
             if (a.getMarque() == marque) {
                 count++;
             }
@@ -182,7 +186,8 @@ class Marche {
     }
 
     void afficheArticle(const string &marque) {
-        for (const Article &a : stock) {
+        for (vector<Article>::iterator it = stock.begin(); it != stock.end(); ++it) {
+            Article a = *it;
             if (a.getMarque() == marque) {
                 a.affichage();
                 cout << endl;
