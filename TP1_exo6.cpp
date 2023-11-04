@@ -5,44 +5,53 @@
 using namespace std;
 
 class Marque {
-private:
     int code;
     string nom;
 
 public:
-    Marque(int c, const string &n) : code(c), nom(n) {}
+    Marque(int code, const string nom)
+	{
+		this->code = code;
+		this->nom = nom;
+	}
 
     int getCode() { return code; }
     string getNom() { return nom; }
 
-    void setCode(int c) { code = c; }
-    void setNom(const string &n) { nom = n; }
+    void setCode(int c) { this->code = c; }
+    void setNom(string nom) { this->nom = nom; }
 
     void affiche() {
-        cout << "Code de la marque : " << code << endl;
-        cout << "Nom de la marque : " << nom << endl;
+        cout << "Code de la marque : " << this->code << endl;
+        cout << "Nom de la marque : " << this->nom << endl;
     }
 };
 
 class Article {
-private:
     static int reference_auto_increment;
     int reference;
     float prixHT;
     string marque;
     float tva;
 
-public:
-    Article(float p, const string &m, float t = 20) : reference(++reference_auto_increment), prixHT(p), marque(m), tva(t) {}
+	public:
+    Article(float prixHT, string marque, float tva = 20)
+	{
+		this->reference_auto_increment++;
+		this->reference = reference_auto_increment;
+		this->prixHT = prixHT;
+		this->marque = marque;
+		this->tva = tva;
+	}
 
     int getReference() { return reference; }
     float getPrixHT() { return prixHT; }
     string getMarque() { return marque; }
     float getTVA() { return tva; }
 
-    void setPrixHT(float p) { prixHT = p; }
-    void setMarque(const string &m) { marque = m; }
-    void setTVA(float t) { tva = t; }
+    void setPrixHT(float prixHT) { this->prixHT = prixHT; }
+    void setMarque(string marque) { this->marque = marque; }
+    void setTVA(float tva) { this->tva = tva; }
 
     void saisie() {
         cout << "Prix HT : ";
@@ -76,14 +85,17 @@ public:
 int Article::reference_auto_increment = 0;
 
 class Marche {
-private:
     string nomMagasin;
     string adresse;
     int numeroRue;
     vector<Article> stock;
 
-public:
-    Marche(const string &nom, const string &adr, int rue) : nomMagasin(nom), adresse(adr), numeroRue(rue) {}
+	public:
+    Marche(string nomMagasin, string adresse, int numeroRue) {
+		this->nomMagasin = nomMagasin;
+		this->adresse = adresse;
+		this->numeroRue = numeroRue;
+	}
 
     string getNomMagasin() { return nomMagasin; }
     string getAdresse() { return adresse; }
@@ -211,4 +223,8 @@ int main() {
     }
 
     int nbrArticlesMarqueA = hypermarche.nbrArticleAvecMemeMarque("MarqueA");
-    cout << "Nombre d'articles de
+    cout << "Nombre d'articles de la marque 'MarqueA' : " << nbrArticlesMarqueA << endl;
+
+    cout << "Articles de la marque 'MarqueA' dans le stock : " << endl;
+    hypermarche.afficheArticle("MarqueA");
+}
